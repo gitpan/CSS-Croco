@@ -1,0 +1,20 @@
+Changes
+const-c.inc
+const-xs.inc
+Croco.bs
+Croco.c
+Croco.o
+Croco.xs
+fallback/const-c.inc
+fallback/const-xs.inc
+lib/CSS/Croco.pm
+lib/CSS/Croco/Statement/RuleSet.pm
+lib/CSS/Croco/Term.pm
+lib/CSS/Croco/Term/URI.pm
+Makefile.PL
+MANIFEST
+ppport.h
+README
+t/CSS-Croco.t
+typemap
+META.yml                                 Module meta-data (added by MakeMaker)
