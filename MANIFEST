@@ -9,6 +9,7 @@ fallback/const-c.inc
 fallback/const-xs.inc
 lib/CSS/Croco.pm
 lib/CSS/Croco/Statement/RuleSet.pm
+lib/CSS/Croco/Stylesheet.pod
 lib/CSS/Croco/Term.pm
 lib/CSS/Croco/Term/URI.pm
 Makefile.PL

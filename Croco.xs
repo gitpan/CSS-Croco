@@ -64,35 +64,34 @@ rules(stylesheet)
         int number_of_rules = cr_stylesheet_nr_rules( stylesheet );
         for ( i = 0; i < number_of_rules; i++ ) {
             CRStatement* statement = cr_stylesheet_statement_get_from_list( stylesheet, i );
-            SV* rv = newSViv(0);
-            char *class;
-            char base[] = "CSS::Croco::Statement::";
+            SV* rv = newSV(0);
+            SV* class = newSVpv("CSS::Croco::Statement::", strlen("CSS::Croco::Statement::"));
             switch ( statement->type ) {
                 case AT_RULE_STMT:
-                    class = strdup("AtRule");
+                    sv_catpv( class, "AtRule");
                     break;
                 case RULESET_STMT:    
-                    class = strdup("RuleSet");
+                    sv_catpv(class, "RuleSet");
                     break;
                 case AT_IMPORT_RULE_STMT:
-                    class = strdup("Import");
+                    sv_catpv(class, "Import");
                     break;
                 case AT_MEDIA_RULE_STMT: 
-                    class = strdup("Media");
+                    sv_catpv(class, "Media");
                     break;
                 case AT_PAGE_RULE_STMT: 
-                    class = strdup("Page");
+                    sv_catpv(class, "Page");
                     break;
                 case AT_CHARSET_RULE_STMT: 
-                    class = strdup("Charset");
+                    sv_catpv(class, "Charset");
                     break;
                 case AT_FONT_FACE_RULE_STMT:
-                    class = strdup("FontFace");
+                    sv_catpv(class, "FontFace");
                     break;
                 default:
-                    class = strdup("Unknown");
+                    sv_catpv(class, "Unknown");
             }
-            sv_setref_pv(rv, strcat(base,class), (void*) statement);
+            sv_setref_pv(rv, SvPV_nolen(class), (void*) statement);
             av_push( RETVAL, rv );
         }
     OUTPUT:

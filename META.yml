@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               CSS-Croco
-version:            0.02
+version:            0.03
 abstract:           Quick CSS parser
 author:
     - Andrey Kostenko <gugu@park.rambler.ru>

@@ -18,7 +18,7 @@ use AutoLoader;
 # If you do not need this, moving things directly into @EXPORT or @EXPORT_OK
 # will save memory.
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()
@@ -77,6 +77,18 @@ CSS::Croco - Quick CSS parser
 XS binding for libcroco
 
 DOCS: TODO. See test files.
+
+=head1 METHODS
+
+=head2 new
+
+Creates new instance of CSS::Croco
+
+=head2 parse
+
+Args: C<$string>
+
+Parses string C<$string> and returns C<CSS::Croco::StyleSheet> object.
 
 
 =head1 SEE ALSO
