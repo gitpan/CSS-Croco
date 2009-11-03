@@ -1,7 +1,7 @@
 --- #YAML:1.0
 name:               CSS-Croco
-version:            0.01
-abstract:           Perl extension for blah blah blah
+version:            0.02
+abstract:           Quick CSS parser
 author:
     - Andrey Kostenko <gugu@park.rambler.ru>
 license:            unknown
@@ -15,7 +15,7 @@ no_index:
     directory:
         - t
         - inc
-generated_by:       ExtUtils::MakeMaker version 6.54
+generated_by:       ExtUtils::MakeMaker version 6.55_02
 meta-spec:
     url:      http://module-build.sourceforge.net/META-spec-v1.4.html
     version:  1.4

@@ -13,6 +13,7 @@ WriteMakefile(
     CCFLAGS => `pkg-config --cflags libcroco-0.6`,
     LIBS => [ `pkg-config --libs libcroco-0.6` ],
     INC               => '-I.', # e.g., '-I. -I/usr/include/other'
+    XSOPT => '-prototypes',
 	# Un-comment this if you add C files to link with later:
     # OBJECT            => '$(O_FILES)', # link all the C files too
 );
@@ -28,6 +29,7 @@ if  (eval {require ExtUtils::Constant; 1}) {
                                      DEFAULT_TYPE => 'IV',
                                      C_FILE       => 'const-c.inc',
                                      XS_FILE      => 'const-xs.inc',
+    XSOPT => '-prototypes',
                                   );
 
 }
