@@ -214,40 +214,38 @@ value(declaration, value = NULL)
         }
         CRTerm* term = declaration->value;
         SV* rv = newSV(0);
-        char* type;
-        char base[] = "CSS::Croco::Term";
+        SV* class = newSVpv("CSS::Croco::Term", strlen("CSS::Croco::Term"));
         switch ( term->type ) {
             case TERM_NO_TYPE:
-                type = strdup("");
                 break;
             case TERM_NUMBER:
-                type = strdup("::Number");
+                sv_catpv(class, "::Number");
                 break;
             case TERM_FUNCTION:
-                type = strdup("::Function");
+                sv_catpv(class, "::Function");
                 break;
             case TERM_STRING:
-                type = strdup("::String");
+                sv_catpv(class, "::String");
                 break;
             case TERM_IDENT:
-                type = strdup("::Ident");
+                sv_catpv(class, "::Ident");
                 break;
             case TERM_URI:
-                type = strdup("::URI");
+                sv_catpv(class, "::URI");
                 break;
             case TERM_RGB:
-                type = strdup("::RGB");
+                sv_catpv(class, "::RGB");
                 break;
             case TERM_UNICODERANGE:
-                type = strdup("::UnicodeRange");
+                sv_catpv(class, "::UnicodeRange");
                 break;
             case TERM_HASH:
-                type = strdup("::Hash");
+                sv_catpv(class, "::Hash");
                 break;
             default:
-                type = strdup("::Unknown");
+                sv_catpv(class, "::Unknown");
         }
-        sv_setref_pv(rv, strcat(base, type), (void*) term);
+        sv_setref_pv(rv, SvPV_nolen(class), (void*) term);
         RETVAL = rv;
     OUTPUT:        
         RETVAL

@@ -1,9 +1,6 @@
 Changes
 const-c.inc
 const-xs.inc
-Croco.bs
-Croco.c
-Croco.o
 Croco.xs
 fallback/const-c.inc
 fallback/const-xs.inc

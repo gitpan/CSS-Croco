@@ -1,5 +1,7 @@
 Revision history for Perl extension CSS::Croco.
 
+0.04  вторник,  3 ноября 2009 г. 19:01:24 (MSK)
+    now it works on linux
 0.01  Sun Nov  1 21:33:02 2009
 	- original version; created by h2xs 1.23 with options
 		-p cr_om_ -n CSS::Croco /usr/local/include/libcroco-0.6/libcroco/libcroco.h
