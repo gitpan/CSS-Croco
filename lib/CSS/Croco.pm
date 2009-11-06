@@ -3,7 +3,11 @@ package CSS::Croco;
 use 5.008009;
 use strict;
 use warnings;
+use URI;
 use CSS::Croco::Statement::RuleSet;
+use CSS::Croco::Term::Hash;
+use CSS::Croco::Term::Ident;
+use CSS::Croco::Term::Number;
 use CSS::Croco::Term::URI;
 use Carp;
 
@@ -18,7 +22,7 @@ use AutoLoader;
 # If you do not need this, moving things directly into @EXPORT or @EXPORT_OK
 # will save memory.
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()
@@ -67,7 +71,7 @@ CSS::Croco - Quick CSS parser
         p { padding: 0 }
     ' );
     my $rules =  $stylesheet->rules;
-    my $decls = $rules->[2]->get_declarations;
+    my $decls = $rules->[2]->declarations;
     say $decls->to_string(0) # padding : 0;
     my $list = CSS::Croco::DeclarationList->parse( 'border: solid 1px; border: solid 2px;' );
     say $list->property( 'border')->to_string # 'border : solid 1px';
@@ -90,6 +94,11 @@ Args: C<$string>
 
 Parses string C<$string> and returns C<CSS::Croco::StyleSheet> object.
 
+=head2 parse_file
+
+Args: C<$filename>
+
+Parses file $filename
 
 =head1 SEE ALSO
 

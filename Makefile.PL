@@ -1,43 +1,13 @@
 use 5.008009;
-use ExtUtils::MakeMaker;
-# See lib/ExtUtils/MakeMaker.pm for details of how to influence
-# the contents of the Makefile that is written.
+use inc::Module::Install;
+name 'CSS-Croco';
+all_from 'lib/CSS/Croco.pm';
+requires 'URI';
+repository 'http://developers.rambler.ru/svn/perlmodules';
+system("pkg-config libcroco-0.6") and die "NA: libcroco-0.6 is not available. Please intall it and try again";
 WriteMakefile(
-    NAME              => 'CSS::Croco',
-    VERSION_FROM      => 'lib/CSS/Croco.pm', # finds $VERSION
-    PREREQ_PM         => {}, # e.g., Module::Name => 1.1
-    ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
-      (ABSTRACT_FROM  => 'lib/CSS/Croco.pm', # retrieve abstract from module
-       AUTHOR         => 'Andrey Kostenko <gugu@park.rambler.ru>') : ()),
-    DEFINE            => '', # e.g., '-DHAVE_SOMETHING'
     CCFLAGS => `pkg-config --cflags libcroco-0.6`,
     LIBS => [ `pkg-config --libs libcroco-0.6` ],
     INC               => '-I.', # e.g., '-I. -I/usr/include/other'
     XSOPT => '-prototypes',
-	# Un-comment this if you add C files to link with later:
-    # OBJECT            => '$(O_FILES)', # link all the C files too
 );
-if  (eval {require ExtUtils::Constant; 1}) {
-  # If you edit these definitions to change the constants used by this module,
-  # you will need to use the generated const-c.inc and const-xs.inc
-  # files to replace their "fallback" counterparts before distributing your
-  # changes.
-  my @names = (qw());
-  ExtUtils::Constant::WriteConstants(
-                                     NAME         => 'CSS::Croco',
-                                     NAMES        => \@names,
-                                     DEFAULT_TYPE => 'IV',
-                                     C_FILE       => 'const-c.inc',
-                                     XS_FILE      => 'const-xs.inc',
-    XSOPT => '-prototypes',
-                                  );
-
-}
-else {
-  use File::Copy;
-  use File::Spec;
-  foreach my $file ('const-c.inc', 'const-xs.inc') {
-    my $fallback = File::Spec->catfile('fallback', $file);
-    copy ($fallback, $file) or die "Can't copy $fallback to $file: $!";
-  }
-}

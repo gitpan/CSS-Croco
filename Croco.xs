@@ -38,6 +38,20 @@ parse (parser, string)
     OUTPUT:
         RETVAL
             
+CRStyleSheet *
+parse_file (parser, filename)
+    CROMParser *parser;
+    char* filename
+    CODE:
+        CRStyleSheet *stylesheet = NULL ;
+        enum CRStatus status = cr_om_parser_parse_file( parser, filename, CR_UTF_8, &stylesheet );
+        if ( status == CR_OK ) {
+            RETVAL = stylesheet;
+        } else {
+            die( "Died: %d", status ); 
+        }
+    OUTPUT:
+        RETVAL
 
 void
 DESTROY(parser)
@@ -55,13 +69,13 @@ to_string(stylesheet)
     OUTPUT: 
         RETVAL
 
-AV* 
+void
 rules(stylesheet)
     CRStyleSheet * stylesheet
     CODE:
-        RETVAL = newAV();
         int i;
         int number_of_rules = cr_stylesheet_nr_rules( stylesheet );
+        EXTEND(SP, number_of_rules+1);
         for ( i = 0; i < number_of_rules; i++ ) {
             CRStatement* statement = cr_stylesheet_statement_get_from_list( stylesheet, i );
             SV* rv = newSV(0);
@@ -92,10 +106,9 @@ rules(stylesheet)
                     sv_catpv(class, "Unknown");
             }
             sv_setref_pv(rv, SvPV_nolen(class), (void*) statement);
-            av_push( RETVAL, rv );
+            ST(i) = rv;
         }
-    OUTPUT:
-        RETVAL
+        XSRETURN( number_of_rules );
 
 void
 DESTROY(stylesheet)
@@ -105,25 +118,49 @@ DESTROY(stylesheet)
 
 MODULE = CSS::Croco		PACKAGE = CSS::Croco::Statement		PREFIX = cr_stmt_
 
+char*
+to_string(statement, indent = 0)
+    CRStatement * statement
+    long indent
+    CODE:
+        RETVAL = cr_statement_to_string( statement, indent );
+    OUTPUT: 
+        RETVAL
+
 void
 DESTROY(statement)
     CRStatement * statement
     CODE:
-        cr_statement_destroy( statement );
+        //if statement was created from stylesheet, all is ok, it will be destroyed. But if it was created by parse
+        //method, exists a memory leak :-(
 
 MODULE = CSS::Croco		PACKAGE = CSS::Croco::Statement::RuleSet		PREFIX = cr_stmt_
 
 SV*
-get_declarations(statement)
+declarations(statement)
     CRStatement *statement
     CODE:
         CRDeclaration* decl = NULL;
-        RETVAL = newAV();
         cr_statement_ruleset_get_declarations(statement, &decl);
-        int i;
-        SV* rv = newSV(0);
-        sv_setref_pv(rv, "CSS::Croco::DeclarationList", (void*) decl);
-        RETVAL = rv;
+        int gimme = GIMME_V;
+
+        if ( gimme == G_ARRAY ) {
+            SPAGAIN;
+            AV* av = newAV();
+            int i;
+            int n = cr_declaration_nr_props(decl);
+            EXTEND(SP, n);
+            for ( i = 0; i < n; i++ ) {
+                SV* rv = newSV(0);
+                ST(i) = sv_2mortal(sv_setref_pv(rv, "CSS::Croco::Declaration", (void *) decl ) );
+                decl = decl->next;
+            }
+            XSRETURN( n );
+        } else {
+            SV* rv = newSV(0);
+            sv_setref_pv(rv, "CSS::Croco::DeclarationList", (void*) decl);
+            RETVAL = rv;
+        }
     OUTPUT: 
         RETVAL        
 
@@ -289,6 +326,13 @@ to_string(declaration, indent = 0)
 
 MODULE = CSS::Croco		PACKAGE = CSS::Croco::Term   PREFIX = cr_term_
 
+char* get(term)
+    CRTerm * term
+    CODE:
+        RETVAL = cr_term_to_string( term );
+    OUTPUT:
+        RETVAL
+
 char*
 to_string(term)
     CRTerm * term
@@ -297,5 +341,37 @@ to_string(term)
     OUTPUT: 
         RETVAL
 
+MODULE = CSS::Croco		PACKAGE = CSS::Croco::Term::Number   PREFIX = cr_term_number_
+
+
+MODULE = CSS::Croco		PACKAGE = CSS::Croco::Term::URI   PREFIX = cr_term_number_
+
+SV* get(term)
+    CRTerm * term
+    CODE:
+        SV* rv;
+        char* string = cr_string_peek_raw_str(term->content.str);
+        dSP;
+        ENTER;
+        SAVETMPS;
+        PUSHMARK(SP);
+        XPUSHs(sv_2mortal(newSVpv("URI",0)));
+        XPUSHs(sv_2mortal(newSVpv(string,0)));
+        PUTBACK;
+        int count = call_pv( "URI::new", G_SCALAR );
+
+        SPAGAIN;
+        
+        if ( count != 1 )
+            croak("Some shit happened");
+
+        rv = POPs;
+        SvREFCNT_inc(rv);
+        PUTBACK;
+        FREETMPS;
+        LEAVE;
+        RETVAL = rv;
+    OUTPUT:
+        RETVAL
 
 INCLUDE: const-xs.inc

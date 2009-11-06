@@ -4,15 +4,26 @@ const-xs.inc
 Croco.xs
 fallback/const-c.inc
 fallback/const-xs.inc
+inc/Module/Install.pm
+inc/Module/Install/Base.pm
+inc/Module/Install/Makefile.pm
+inc/Module/Install/MakeMaker.pm
+inc/Module/Install/Metadata.pm
 lib/CSS/Croco.pm
 lib/CSS/Croco/Statement/RuleSet.pm
 lib/CSS/Croco/Stylesheet.pod
 lib/CSS/Croco/Term.pm
+lib/CSS/Croco/Term/Hash.pm
+lib/CSS/Croco/Term/Ident.pm
+lib/CSS/Croco/Term/Number.pm
 lib/CSS/Croco/Term/URI.pm
 Makefile.PL
 MANIFEST
+META.yml
 ppport.h
 README
 t/CSS-Croco.t
+t/data/layout.css
+t/heavy.t
+t/parsed/layout.css
 typemap
-META.yml                                 Module meta-data (added by MakeMaker)
