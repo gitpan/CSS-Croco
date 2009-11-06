@@ -6,11 +6,32 @@ use warnings;
 
 =head1 NAME
 
-<+name+>
+CSS::Croco::Statement::RuleSet - List of rule objects
 
 =head1 DESCRIPTION
 
+RuleSet is:
 
+    selector, selector1 {
+        property: value;
+        ...
+    }
+
+=head1 METHODS
+
+=head2 declarations
+
+Returns list of declarations
+
+=head2 parse_declaration
+
+Args: C<$string>
+
+Parses single declaration
+
+=head2 selectors
+
+Returns list of CSS Selectors
 
 =head1 BUGS
 

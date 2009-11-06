@@ -5,7 +5,7 @@
 
 # change 'tests => 1' to 'tests => last_test_to_print';
 
-use Test::More tests => 16;
+use Test::More tests => 18;
 BEGIN { use_ok('CSS::Croco') };
 my $parser = CSS::Croco->new;
 my $stylesheet = $parser->parse( '
@@ -34,3 +34,6 @@ is $decl->to_string, 'bbb : url(http://google.com) !important';
 ok ! $decl->next;
 isa_ok $decl->value->get, 'URI';
 is $decl->value->get->host, 'google.com';
+my ($selector) = $rules[2]->selectors;
+is $selector->name, 'p';
+ok !$selector->is_case_sensitive;

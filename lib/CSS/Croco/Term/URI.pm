@@ -10,8 +10,17 @@ __END__
 
 =head1 NAME
 
+CSS::Croco::Term::URI - URI value
+
 =head1 DESCRIPTION
 
+Handles URLs like url(http://google.com)
+
+=head1 METHODS
+
+=head2 get
+
+Returns new URI object.
 
 
 =head1 BUGS

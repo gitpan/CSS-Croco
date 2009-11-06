@@ -23,4 +23,4 @@ requires:
 resources:
   license: http://dev.perl.org/licenses/
   repository: http://developers.rambler.ru/svn/perlmodules
-version: 0.05
+version: 0.06

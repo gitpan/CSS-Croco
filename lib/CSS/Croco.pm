@@ -8,6 +8,7 @@ use CSS::Croco::Statement::RuleSet;
 use CSS::Croco::Term::Hash;
 use CSS::Croco::Term::Ident;
 use CSS::Croco::Term::Number;
+use CSS::Croco::Term::String;
 use CSS::Croco::Term::URI;
 use Carp;
 
@@ -22,7 +23,7 @@ use AutoLoader;
 # If you do not need this, moving things directly into @EXPORT or @EXPORT_OK
 # will save memory.
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()

@@ -1,29 +1,20 @@
-package CSS::Croco::Term;
+package CSS::Croco::Term::String;
 
 use utf8;
 use strict;
 use warnings;
-1;
+
+our @ISA = "CSS::Croco::Term";
 
 __END__
 
 =head1 NAME
 
-CSS::Croco::Term - value of CSS property
+CSS::Croco::Term::String - String terms
 
 =head1 DESCRIPTION
 
-Abstract class, do not used directly
-
-=head1 METHODS
-
-=head2 get
-
-Returns value
-
-=head2 to_string
-
-Returns string representation of value
+Handles strings like C<"Times New Roman">
 
 =head1 BUGS
 
@@ -39,7 +30,7 @@ Rambler Internet Holding
 
 =head1 CREATED
 
-03.11.2009 02:47:42 MSK
+06.11.2009 22:20:55 MSK
 
 =cut
 

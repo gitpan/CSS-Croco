@@ -28,6 +28,9 @@ foreach my $file ( glob 't/data/*' ) {
     ok $sheet, 'stylesheet parsing';
     foreach my $rule ( $sheet->rules ) {
         ok $rule, 'rule parsing';
+        foreach my $selector ( $rule->selectors ) {
+            ok $selector;
+        }
         foreach my $declaration ($rule->declarations) {
             ok $declaration;
             ok defined $declaration->value;

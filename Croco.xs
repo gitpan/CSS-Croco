@@ -164,6 +164,29 @@ declarations(statement)
     OUTPUT: 
         RETVAL        
 
+SV*
+selectors(statement)
+    CRStatement *statement
+    CODE:
+        CRSelector* sel = NULL;
+        cr_statement_ruleset_get_sel_list(statement, &sel);
+        SPAGAIN;
+        AV* av = newAV();
+        int i;
+        int n = 1;
+        CRSelector *head = sel;
+        while ( sel = sel->next )
+            n++;
+        sel = head;
+        EXTEND(SP, n);
+        for ( i = 0; i < n; i++ ) {
+            SV* rv = newSV(0);
+            ST(i) = sv_2mortal(sv_setref_pv(rv, "CSS::Croco::Selector", (void *) sel ) );
+            sel = sel->next;
+        }
+        XSRETURN( n );
+    OUTPUT: 
+        RETVAL        
 
 CRDeclaration *
 parse_declaration( statement, string)
@@ -173,6 +196,32 @@ parse_declaration( statement, string)
         CRDeclaration* decl = NULL;
         decl = cr_declaration_parse_from_buf( statement, string, CR_UTF_8 );
         RETVAL = decl;
+    OUTPUT:
+        RETVAL
+
+MODULE = CSS::Croco		PACKAGE = CSS::Croco::Selector		PREFIX = cr_decl_list_
+
+char*
+to_string(selector)
+    CRSelector * selector
+    CODE:
+        RETVAL = cr_selector_to_string( selector );
+    OUTPUT: 
+        RETVAL
+
+char*
+name(selector)
+    CRSelector* selector
+    CODE:
+        RETVAL = cr_string_dup2(selector->simple_sel->name);
+    OUTPUT:
+        RETVAL
+
+bool
+is_case_sensitive(selector)
+    CRSelector* selector;
+    CODE:
+        RETVAL = selector->simple_sel->is_case_sentive;
     OUTPUT:
         RETVAL
 
@@ -350,7 +399,7 @@ SV* get(term)
     CRTerm * term
     CODE:
         SV* rv;
-        char* string = cr_string_peek_raw_str(term->content.str);
+        char* string = (char *) cr_string_peek_raw_str(term->content.str);
         dSP;
         ENTER;
         SAVETMPS;
@@ -361,7 +410,7 @@ SV* get(term)
         int count = call_pv( "URI::new", G_SCALAR );
 
         SPAGAIN;
-        
+         
         if ( count != 1 )
             croak("Some shit happened");
 
@@ -374,4 +423,3 @@ SV* get(term)
     OUTPUT:
         RETVAL
 
-INCLUDE: const-xs.inc

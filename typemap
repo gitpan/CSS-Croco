@@ -5,6 +5,7 @@ CRStyleSheet *      T_CRSTYLESHEET
 CRStatement *      T_CRSTATEMENT
 CRDeclaration *      T_CRDECLARATION
 CRTerm *      T_CRTERM
+CRSelector *      T_CRSELECTOR
 
 INPUT
 T_CRDECLARATION
@@ -52,6 +53,14 @@ T_CRTERM
           }
         else
           croak(\"$var is not of type CSS::Croco::Term\");
+T_CRSELECTOR
+        if (sv_derived_from($arg, \"CSS::Croco::Selector\"))
+          {
+            IV tmp = SvIV((SV *) SvRV($arg));
+            $var = INT2PTR(CRSelector *, tmp);
+          }
+        else
+          croak(\"$var is not of type CSS::Croco::Selector\");
 
 OUTPUT
 T_CRSTYLESHEET
@@ -64,3 +73,5 @@ T_CRDECLARATION
         sv_setref_pv($arg, "CSS::Croco::Declaration", (void*) $var);
 T_CRTERM
         sv_setref_pv($arg, "CSS::Croco::Term", (void*) $var);
+T_CRSELECTOR
+        sv_setref_pv($arg, "CSS::Croco::Selector", (void*) $var);
