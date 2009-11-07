@@ -134,7 +134,45 @@ DESTROY(statement)
         //if statement was created from stylesheet, all is ok, it will be destroyed. But if it was created by parse
         //method, exists a memory leak :-(
 
-MODULE = CSS::Croco		PACKAGE = CSS::Croco::Statement::RuleSet		PREFIX = cr_stmt_
+MODULE = CSS::Croco		PACKAGE = CSS::Croco::Statement::Media
+
+void
+media_list(statement)
+    CRStatement *statement
+    CODE:
+        GList *list = statement->kind.media_rule->media_list;
+        int n = 0;
+        GList *head = list;
+        while ( list ) {
+            n++;
+            list = list->next;
+        }
+        EXTEND( sp, n );
+        list = head;
+        int i;
+        for ( i = 0; i < n; i++ ) {
+            char *data = cr_string_dup2(list->data);
+            ST(i) = sv_2mortal(newSVpv( data, strlen(data)) );
+            list = list->next;
+        }
+        XSRETURN(n);
+
+void
+rules(media_statement)
+    CRStatement * media_statement
+    CODE:
+        int i;
+        int number_of_rules = cr_statement_at_media_nr_rules( media_statement );
+        EXTEND(SP, number_of_rules);
+        for ( i = 0; i < number_of_rules; i++ ) {
+            CRStatement* statement = cr_statement_at_media_get_from_list( media_statement, i );
+            SV* rv = newSV(0);
+            sv_setref_pv(rv, "CSS::Croco::Statement::RuleSet", (void*) statement);
+            ST(i) = rv;
+        }
+        XSRETURN( number_of_rules );
+
+MODULE = CSS::Croco		PACKAGE = CSS::Croco::Statement::RuleSet
 
 SV*
 declarations(statement)

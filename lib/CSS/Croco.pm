@@ -10,6 +10,10 @@ use CSS::Croco::Term::Ident;
 use CSS::Croco::Term::Number;
 use CSS::Croco::Term::String;
 use CSS::Croco::Term::URI;
+use CSS::Croco::StyleSheet;
+use CSS::Croco::Statement;
+use CSS::Croco::Statement::Media;
+use CSS::Croco::Statement::RuleSet;
 use Carp;
 
 use AutoLoader;
@@ -23,7 +27,7 @@ use AutoLoader;
 # If you do not need this, moving things directly into @EXPORT or @EXPORT_OK
 # will save memory.
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()
@@ -37,13 +41,7 @@ sub AUTOLOAD {
     if ($error) { croak $error; }
     {
 	no strict 'refs';
-	# Fixed between 5.005_53 and 5.005_61
-#XXX	if ($] >= 5.00561) {
-#XXX	    *$AUTOLOAD = sub () { $val };
-#XXX	}
-#XXX	else {
 	    *$AUTOLOAD = sub { $val };
-#XXX	}
     }
     goto &$AUTOLOAD;
 }
@@ -71,35 +69,36 @@ CSS::Croco - Quick CSS parser
         * { color: red; background-color: black; fint-size: 12px !important}
         p { padding: 0 }
     ' );
-    my $rules =  $stylesheet->rules;
-    my $decls = $rules->[2]->declarations;
+    my @rules =  $stylesheet->rules;
+    my $decls = $rules[2]->declarations;
     say $decls->to_string(0) # padding : 0;
     my $list = CSS::Croco::DeclarationList->parse( 'border: solid 1px; border: solid 2px;' );
     say $list->property( 'border')->to_string # 'border : solid 1px';
 
 =head1 DESCRIPTION
 
-XS binding for libcroco
-
-DOCS: TODO. See test files.
+This module is an interface to libcroco, providing CSS parser with CSS Object Model. This is early release, some
+functionality was not completed. Especially - CSS SAX Parser.
 
 =head1 METHODS
 
 =head2 new
 
-Creates new instance of CSS::Croco
+Args: none
+
+Creates new instance of L<CSS::Croco>
 
 =head2 parse
 
 Args: C<$string>
 
-Parses string C<$string> and returns C<CSS::Croco::StyleSheet> object.
+Parses string C<$string> and returns L<CSS::Croco::StyleSheet> object.
 
 =head2 parse_file
 
 Args: C<$filename>
 
-Parses file $filename
+Parses file $filename and returns L<CSS::Croco::StyleSheet> object.
 
 =head1 SEE ALSO
 

@@ -12,8 +12,10 @@ inc/Module/Install/MakeMaker.pm
 inc/Module/Install/Metadata.pm
 lib/CSS/Croco.pm
 lib/CSS/Croco/Selector.pm
+lib/CSS/Croco/Statement.pm
+lib/CSS/Croco/Statement/Media.pm
 lib/CSS/Croco/Statement/RuleSet.pm
-lib/CSS/Croco/Stylesheet.pod
+lib/CSS/Croco/StyleSheet.pm
 lib/CSS/Croco/Term.pm
 lib/CSS/Croco/Term/Hash.pm
 lib/CSS/Croco/Term/Ident.pm

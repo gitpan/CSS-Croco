@@ -15,7 +15,11 @@ conditions:
 The above copyright notice and this permission notice shall be
 included in all copies or substantial portions of the Software.
 */
-
+@media print {
+    body {
+        background-color: black; /*:-P*/
+    }
+}
 /* NOTE: Changes to this file will affect the entire site, often in
 unexpected ways. Please mail patches to www-discuss@gnu.org rather
 than commit changes directly. */

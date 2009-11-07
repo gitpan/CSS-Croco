@@ -12,7 +12,7 @@ __END__
 
 =head1 NAME
 
-CSS::Croco::Tem::Hash - hash-color values
+CSS::Croco::Term::Hash - hash-color values
 
 =head1 DESCRIPTION
 
