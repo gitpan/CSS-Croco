@@ -4,16 +4,16 @@ use 5.008009;
 use strict;
 use warnings;
 use URI;
+use CSS::Croco::Statement::Media;
 use CSS::Croco::Statement::RuleSet;
+use CSS::Croco::Statement::RuleSet;
+use CSS::Croco::Statement;
+use CSS::Croco::StyleSheet;
 use CSS::Croco::Term::Hash;
 use CSS::Croco::Term::Ident;
 use CSS::Croco::Term::Number;
 use CSS::Croco::Term::String;
 use CSS::Croco::Term::URI;
-use CSS::Croco::StyleSheet;
-use CSS::Croco::Statement;
-use CSS::Croco::Statement::Media;
-use CSS::Croco::Statement::RuleSet;
 use Carp;
 
 use AutoLoader;
@@ -27,7 +27,7 @@ use AutoLoader;
 # If you do not need this, moving things directly into @EXPORT or @EXPORT_OK
 # will save memory.
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 sub AUTOLOAD {
     # This AUTOLOAD is used to 'autoload' constants from the constant()

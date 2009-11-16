@@ -3,6 +3,7 @@ const-c.inc
 const-xs.inc
 Croco.xs
 Debian_CPANTS.txt
+examples/ex1.pl
 fallback/const-c.inc
 fallback/const-xs.inc
 inc/Module/Install.pm

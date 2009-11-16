@@ -1,4 +1,7 @@
 Revision history for Perl extension CSS::Croco.
+0.08  Sat Nov  7 17:08:04 MSK 2009
+    fixed warnings
+    small fixes
 0.07  Sat Nov  7 03:21:31 MSK 2009
     updated POD
     @media rule processing

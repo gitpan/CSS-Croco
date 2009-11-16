@@ -22,5 +22,5 @@ requires:
   perl: 5.8.9
 resources:
   license: http://dev.perl.org/licenses/
-  repository: http://developers.rambler.ru/svn/perlmodules
-version: 0.07
+  repository: http://developers.rambler.ru/svn/perlmodules/CSS-Croco
+version: 0.08

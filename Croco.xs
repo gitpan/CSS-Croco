@@ -184,7 +184,6 @@ declarations(statement)
 
         if ( gimme == G_ARRAY ) {
             SPAGAIN;
-            AV* av = newAV();
             int i;
             int n = cr_declaration_nr_props(decl);
             EXTEND(SP, n);
@@ -209,7 +208,6 @@ selectors(statement)
         CRSelector* sel = NULL;
         cr_statement_ruleset_get_sel_list(statement, &sel);
         SPAGAIN;
-        AV* av = newAV();
         int i;
         int n = 1;
         CRSelector *head = sel;
