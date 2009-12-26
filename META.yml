@@ -15,6 +15,7 @@ meta-spec:
 name: CSS-Croco
 no_index:
   directory:
+    - examples
     - inc
     - t
 requires:
@@ -23,4 +24,4 @@ requires:
 resources:
   license: http://dev.perl.org/licenses/
   repository: http://developers.rambler.ru/svn/perlmodules/CSS-Croco
-version: 0.08
+version: 0.09
